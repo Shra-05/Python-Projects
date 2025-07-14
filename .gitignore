@@ -1,0 +1,27 @@
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore virtual environments
+venv/
+.venv/
+
+# Ignore PyCharm IDE files
+.idea/
+*.iml
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.swp
+*.bak
+
+# Ignore environment and secret files
+.env
+.env.*
