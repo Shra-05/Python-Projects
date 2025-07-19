@@ -1,3 +1,7 @@
+import random
+import win32com.client
+
+speaker = win32com.client.Dispatch("SAPI.SpVoice")
 Questions = [
     ["The enzyme pepsin converts?","Carbohydrates to sugars","Proteins to amino acids", "Protein to peptones", "Fats to fatty acids and glycerol", 3],
     ["Which of these does not generate energy but are still essential for body?", "Fats", "Proteins", "Vitamins", "Carbohydrates", 3],
@@ -109,25 +113,41 @@ Questions = [
 
 levels = [1000,2000,3000,5000,10000,20000,40000,80000,160000,320000,640000,1250000,2500000,500000,1000000]
 money = 0
+random.shuffle(Questions)
 for i in range(0, len(Questions)):
-    question = Questions[i]
+    question = (Questions[i])
     print(f'Question for Rs.{levels[i]}')
     print(question[0])
-    print(f'a.{question[1]} \t\t b.{question[2]}')
-    print(f'c.{question[3]} \t\t d.{question[4]}')
-    reply = int(input("Enter Your Answer (1-4)\n"))
-    if reply == question[-1]:
-        print(f'Correct Answer!! You won Rs.{levels[i]}')
-        if i==4:
-            money = 10000
-        elif i==9:
-            money = 320000
-        elif i==14:
-            money = 10000000
-    else:
-        print(f'Incorrect Answer!!')
-        print(f'You are Eliminated! and take Rs.{money} home')
-        break
+    speaker.Speak(question[0])
+    options1 = f'1.{question[1]} \t\t 2.{question[2]}'
+    options2 = f'3.{question[3]} \t\t\t4.{question[4]}'
+    print(options1)
+    print(options2)
+    speaker.Speak(options1)
+    speaker.Speak(options2)
+    while True:
+       reply = int(input("Enter Your Answer (1-4)\n"))
+       while reply < 5:
+           if reply == question[-1]:
+               win = f'Correct Answer!! You won Rs.{levels[i]}'
+               print(win)
+               speaker.Speak(win)
+               speaker.Speak('Next Question')
+               if i==4:
+                   money = 10000
+               elif i==9:
+                   money = 320000
+               elif i==14:
+                   money = 10000000
+           else:
+               lose = f'Incorrect Answer!!You are Eliminated! and take Rs.{money} home'
+               print(lose)
+               speaker.speak(lose)
+               break
+       else :
+           invaild = 'Invalid Answer!! Enter option in (1-4)'
+           print(invaild)
+           speaker.Speak(invaild)
 
 
 
